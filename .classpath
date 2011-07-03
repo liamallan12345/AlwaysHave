@@ -3,5 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/aidan/bukkitapi/bukkit-0.0.1-SNAPSHOT.jar" sourcepath="C:/Users/aidan/bukkitapi/javadocs"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Permissions"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

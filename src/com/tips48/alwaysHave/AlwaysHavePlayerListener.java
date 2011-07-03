@@ -9,33 +9,74 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-public class AlwaysHavePlayerListener extends PlayerListener{
+public class AlwaysHavePlayerListener extends PlayerListener {
 	private AlwaysHave plugin;
-	public AlwaysHavePlayerListener(AlwaysHave core){
+
+	public AlwaysHavePlayerListener(AlwaysHave core) {
 		plugin = core;
 	}
-	public void onPlayerJoin(PlayerJoinEvent event){
+
+	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player p = event.getPlayer();
-		PlayerInventory items = p.getInventory();
-		ArrayList<String> itemAmmount = plugin.itemsToAdd;
-		for(String s : itemAmmount){
-			String[] a = s.split(":");
-		ItemStack item = new ItemStack(Integer.parseInt(a[0]), Integer.parseInt(a[1]));
-		if(!(items.contains(Integer.parseInt(a[0])))){
-			items.addItem(item);
-		}
+		if (plugin.usePermissions == true) {
+			if (!(plugin).permissionHandler.has(p, "AlwaysHave.allowed")) {
+				return;
+			} else {
+				PlayerInventory items = p.getInventory();
+				ArrayList<String> itemAmmount = plugin.itemsToAdd;
+				for (String s : itemAmmount) {
+					String[] a = s.split(":");
+					ItemStack item = new ItemStack(Integer.parseInt(a[0]),
+							Integer.parseInt(a[1]));
+					if (!(items.contains(Integer.parseInt(a[0])))) {
+						items.addItem(item);
+					}
+				}
+			}
+		} else {
+			if (!(plugin.playersExcluded.contains(p.getName()))) {
+				PlayerInventory items = p.getInventory();
+				ArrayList<String> itemAmmount = plugin.itemsToAdd;
+				for (String s : itemAmmount) {
+					String[] a = s.split(":");
+					ItemStack item = new ItemStack(Integer.parseInt(a[0]),
+							Integer.parseInt(a[1]));
+					if (!(items.contains(Integer.parseInt(a[0])))) {
+						items.addItem(item);
+					}
+				}
+			}
 		}
 	}
-	public void onPlayerMove(PlayerMoveEvent event){
+
+	public void onPlayerMove(PlayerMoveEvent event) {
 		Player p = event.getPlayer();
-		PlayerInventory items = p.getInventory();
-		ArrayList<String> itemAmmount = plugin.itemsToAdd;
-		for(String s : itemAmmount){
-			String[] a = s.split(":");
-		ItemStack item = new ItemStack(Integer.parseInt(a[0]), Integer.parseInt(a[1]));
-		if(!(items.contains(Integer.parseInt(a[0])))){
-			items.addItem(item);
+		if (plugin.usePermissions == true) {
+			if (!(plugin).permissionHandler.has(p, "AlwaysHave.allowed")) {
+				return;
+			} else {
+				PlayerInventory items = p.getInventory();
+				ArrayList<String> itemAmmount = plugin.itemsToAdd;
+				for (String s : itemAmmount) {
+					String[] a = s.split(":");
+					ItemStack item = new ItemStack(Integer.parseInt(a[0]),
+							Integer.parseInt(a[1]));
+					if (!(items.contains(Integer.parseInt(a[0])))) {
+						items.addItem(item);
+					}
+				}
+			}
+		} else {
+			PlayerInventory items = p.getInventory();
+			ArrayList<String> itemAmmount = plugin.itemsToAdd;
+			for (String s : itemAmmount) {
+				String[] a = s.split(":");
+				ItemStack item = new ItemStack(Integer.parseInt(a[0]),
+						Integer.parseInt(a[1]));
+				if (!(items.contains(Integer.parseInt(a[0])))) {
+					items.addItem(item);
+				}
+			}
 		}
-		}
-}
+	}
 }
